@@ -26,7 +26,7 @@ final class ClientHandshakeHandler: ChannelInboundHandler {
             self.promise.succeed(())
         }
     }
-    
+  
     deinit {
         struct Disconnected: Error {}
         self.promise.fail(Disconnected())
@@ -60,6 +60,8 @@ final class SSHClientSession {
             userAuthDelegate: authenticationMethod,
             serverAuthDelegate: hostKeyValidator
         )
+      
+        clientConfiguration.transportProtectionSchemes += [AES128CTR.self]
         
         algorithms.apply(to: &clientConfiguration)
         
@@ -106,6 +108,8 @@ final class SSHClientSession {
             userAuthDelegate: authenticationMethod,
             serverAuthDelegate: hostKeyValidator
         )
+      
+        clientConfiguration.transportProtectionSchemes += [AES128CTR.self]
         
         algorithms.apply(to: &clientConfiguration)
         
